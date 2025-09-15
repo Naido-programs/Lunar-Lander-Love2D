@@ -6,6 +6,7 @@ function love.load()
   flame = love.graphics.newImage("images/flame.png")
   earth = love.graphics.newImage("images/earth.png")
   moon = love.graphics.newImage("images/moon.jpg")
+  base = love.graphics.newImage("images/base.png")
 	love.graphics.setBackgroundColor(0,0,0)
 	lunarModule = LunarModule(330,0)
 	restart()
@@ -48,11 +49,11 @@ function love.update(dt)
 	accely = ((6.67E-11 * 7.3477E22)/math.pow((1737100 + distance),2))/60
 
 	if love.keyboard.isDown("left") then
-		accelx = accelx - power
+		accelx = accelx - 0.01 * dt
 	end
 
 	if love.keyboard.isDown("right") then
-		accelx = accelx + power
+		accelx = accelx + 0.01 * dt
 	end
 	
 	if love.keyboard.isDown("up") and not landed then
@@ -102,9 +103,11 @@ function love.update(dt)
 end
 
 function love.draw()
+	love.graphics.setColor(1,1,1,1)
 	love.graphics.print("presiona la tecla A para acelerar",10,10)
 	love.graphics.print("y arriba o abajo para variar la potencia",10,25)
 	love.graphics.draw(moon,scw/2 - moon:getWidth()/2,470)
+	love.graphics.draw(base,(scw - (base:getWidth()+73)*0.25)/2,485,0,0.25)
 	love.graphics.draw(earth,550,200,math.rad(-9),0.5,0.5)
 	lunarModule.paint()
 	if powerOn then
@@ -137,5 +140,6 @@ function love.draw()
 			love.graphics.print("Presiona espacio para reiniciar",300,350)
 		end
 	end
+	love.graphics.setColor(0,0,0,1)
 	love.graphics.line(332,500,465,500)
 end
